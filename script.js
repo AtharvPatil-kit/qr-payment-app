@@ -18,5 +18,5 @@ function generateQR() {
     qrBox.appendChild(canvas);
   });
 
-  statusDiv.innerHTML = '⏳ Waiting for payment (This is manual confirmation so you can close the window 🙂)...';
+  statusDiv.innerHTML = '⏳ Paisa aa raha hai... thoda bharosa rakho, UPI bhagwan sab dekhta hai! 💸';
 }
