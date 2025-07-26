@@ -18,5 +18,18 @@ function generateQR() {
     qrBox.appendChild(canvas);
   });
 
-  statusDiv.innerHTML = '⏳ Paisa aa raha hai... thoda bharosa rakho, UPI bhagwan sab dekhta hai! 💸';
+  const successLines = [
+  "Bhai paisa aagaya! Ab party kis din hai?",
+  "Yeh hui na baat! UPI ne finally izzat rakh li!",
+  "Ab bolo... bhai ne bola tha paisa ayega!",
+  "Bhai paisa aaya hai... ab chai samosa ho jaye?",
+  "Arre arre! UPI ne toh kamaal kar diya, paisa turant!",
+  "Chaandi ho gayi bhai! Paise ne entry maar di!",
+  "Kya baat hai! Iss baar UPI ne record tod diya!",
+  "Jai ho UPI Maharaj ki! Paise ki leela apar hai!"
+];
+
+const randomSuccess = successLines[Math.floor(Math.random() * successLines.length)];
+statusDiv.innerHTML = `✅ ₹${amount} received! ${randomSuccess}`;
+
 }
