@@ -18,5 +18,5 @@ function generateQR() {
     qrBox.appendChild(canvas);
   });
 
-  statusDiv.innerHTML = '⏳ Waiting for payment (manual confirmation)...';
+  statusDiv.innerHTML = '⏳ Waiting for payment (This is manual confirmation so you can close the window 🙂)...';
 }
