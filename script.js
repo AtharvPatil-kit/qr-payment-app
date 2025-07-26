@@ -9,7 +9,7 @@ function generateQR() {
   }
 
   const upiID = "8904556907@upi"; // Replace this
-  const name = "Atharv Patil";     // Your store/brand name
+  const name = "Paisa bhej 💸";     // Your store/brand name
   const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
 
   qrBox.innerHTML = '';
