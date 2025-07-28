@@ -7,7 +7,7 @@ function generateQR() {
     return;
   }
 
-  const upiLink = `upi://pay?pa=${upi}&pn=QR Payment&am=${amount}&cu=INR`;
+  const upiLink = `upi://pay?pa=${upi}&pn=QRPayment&am=${amount}&cu=INR`;
 
   document.getElementById("upi-link").textContent = upiLink;
   document.getElementById("qr-img").src =
