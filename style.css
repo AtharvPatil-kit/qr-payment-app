@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #f0fff0, #e6f9ff);
+  background: linear-gradient(centre, #f0fff0, #e6f9ff);
   display: flex;
   justify-content: center;
   align-items: center;
