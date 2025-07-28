@@ -1,35 +1,24 @@
 function generateQR() {
-  const amount = document.getElementById('amount').value;
-  const qrBox = document.getElementById('qrBox');
-  const statusDiv = document.getElementById('status');
+  const upi = "8904556907@upi";
+  const amount = document.getElementById("amount").value.trim();
 
-  if (!amount || amount <= 0) {
-    alert('Please enter a valid amount');
+  if (!amount) {
+    alert("Please enter an amount.");
     return;
   }
 
-  const upiID = "8904556907@upi"; // Replace this
-  const name = "Paisa bhej 💸";     // Your store/brand name
-  const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+  const upiLink = `upi://pay?pa=${upi}&pn=QR Payment&am=${amount}&cu=INR`;
 
-  qrBox.innerHTML = '';
-  QRCode.toCanvas(document.createElement('canvas'), upiLink, function (error, canvas) {
-    if (error) console.error(error);
-    qrBox.appendChild(canvas);
+  document.getElementById("upi-link").textContent = upiLink;
+  document.getElementById("qr-img").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(upiLink);
+
+  document.getElementById("result").style.display = "block";
+}
+
+function copyLink() {
+  const text = document.getElementById("upi-link").textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("UPI link copied to clipboard!");
   });
-
-  const successLines = [
-  "Bhai paisa aagaya! Ab party kis din hai?",
-  "Yeh hui na baat! UPI ne finally izzat rakh li!",
-  "Ab bolo... bhai ne bola tha paisa ayega!",
-  "Bhai paisa aaya hai... ab chai samosa ho jaye?",
-  "Arre arre! UPI ne toh kamaal kar diya, paisa turant!",
-  "Chaandi ho gayi bhai! Paise ne entry maar di!",
-  "Kya baat hai! Iss baar UPI ne record tod diya!",
-  "Jai ho UPI Maharaj ki! Paise ki leela apar hai!"
-];
-
-const randomSuccess = successLines[Math.floor(Math.random() * successLines.length)];
-statusDiv.innerHTML = `✅ ₹${amount} received! ${randomSuccess}`;
-
 }
