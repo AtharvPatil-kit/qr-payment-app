@@ -1,9 +1,16 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Payment</title>
+
+  <!-- Google AdSense -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4165665468191464"
+    crossorigin="anonymous"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -72,9 +79,9 @@
     }
 
     #qrcode {
-      margin: 0 auto 10px;
+      margin: 15px auto;
       width: 180px;
-      height: 180px;
+      min-height: 180px;
     }
 
     .link-box {
@@ -84,23 +91,25 @@
       word-break: break-all;
       font-size: 0.85rem;
       margin-bottom: 10px;
+      min-height: 40px;
     }
 
     .copy-btn {
       background-color: #007bff;
-      color: white;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background-color: #0056b3;
     }
 
     .footer {
       margin-top: 10px;
       font-size: 0.8rem;
       color: #666;
+    }
+
+    .ad-container {
+      margin: 20px 0;
     }
 
     @media (max-height: 600px) {
@@ -114,51 +123,126 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <h1>💸 Money transfer via QR</h1>
-    <div class="small-text">Payment to: <strong id="upi-display">8904556907@upi</strong></div>
+    <h1>💸 Money Transfer via QR</h1>
 
-    <input type="text" id="upiId" placeholder="Enter UPI ID" value="8904556907@upi" />
-    <input type="number" id="amount" placeholder="Enter Amount" />
+    <div class="small-text">
+      Payment to:
+      <strong id="upi-display">8904556907@upi</strong>
+    </div>
+
+    <input
+      type="text"
+      id="upiId"
+      placeholder="Enter UPI ID"
+      value="8904556907@upi">
+
+    <input
+      type="number"
+      id="amount"
+      placeholder="Enter Amount"
+      min="1">
 
     <button onclick="generateQR()">Generate QR</button>
 
     <div id="qrcode"></div>
 
-    <div class="link-box" id="paymentLinkBox"></div>
+    <div class="link-box" id="paymentLinkBox">
+      Enter amount and click Generate QR
+    </div>
 
-    <button class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+    <button class="copy-btn" onclick="copyLink()">
+      📋 Copy Link
+    </button>
 
-     <div class="footer"></div> 
+    <!-- AdSense Ad Unit -->
+    <div class="ad-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4165665468191464"
+           data-ad-slot="YOUR_AD_SLOT_ID"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <div class="footer">
+      Secure UPI QR Payment Generator
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <script>
     function generateQR() {
       const upi = document.getElementById("upiId").value.trim();
       const amount = document.getElementById("amount").value.trim();
-      
-      // UPI URL with permanent note "NBFC"
-      const upiURL = `upi://pay?pa=${upi}&pn=QRPayment&am=${amount}&cu=INR&tn=NBFC`;
+
+      if (!upi) {
+        alert("Please enter a UPI ID.");
+        return;
+      }
+
+      if (!amount || Number(amount) <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+
+      const upiURL =
+        `upi://pay?pa=${encodeURIComponent(upi)}&pn=QRPayment&am=${amount}&cu=INR&tn=NBFC`;
 
       document.getElementById("upi-display").innerText = upi;
       document.getElementById("paymentLinkBox").innerText = upiURL;
 
       const qrDiv = document.getElementById("qrcode");
       qrDiv.innerHTML = "";
-      QRCode.toCanvas(upiURL, { width: 180, margin: 2 }, function (err, canvas) {
-        if (err) console.error(err);
-        else qrDiv.appendChild(canvas);
-      });
+
+      QRCode.toCanvas(
+        upiURL,
+        {
+          width: 180,
+          margin: 2
+        },
+        function(err, canvas) {
+          if (err) {
+            console.error(err);
+            alert("Failed to generate QR code.");
+            return;
+          }
+
+          qrDiv.appendChild(canvas);
+        }
+      );
     }
 
     function copyLink() {
-      const text = document.getElementById("paymentLinkBox").innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Payment link copied!");
-      });
+      const text =
+        document.getElementById("paymentLinkBox").innerText;
+
+      if (!text || text === "Enter amount and click Generate QR") {
+        alert("Generate a payment link first.");
+        return;
+      }
+
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          alert("Payment link copied!");
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Failed to copy link.");
+        });
     }
+
+    window.onload = function() {
+      document.getElementById("amount").focus();
+    };
   </script>
 </body>
 </html>
+```
